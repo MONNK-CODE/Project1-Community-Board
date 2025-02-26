@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import soccerResources from './soccer-resource.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faPersonRunning, faFutbol, faBowlFood } from '@fortawesome/free-solid-svg-icons';
 
-function App() {
-  const [count, setCount] = useState(0)
+library.add(faPersonRunning, faFutbol, faBowlFood);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+const App = () => {
+
+    const getIcon = (title) => {
+        switch (title) {
+            case "Fitness Training":
+                return <FontAwesomeIcon icon="fa-solid fa-person-running"/>;
+            case "Nutrition Tips":
+                return <FontAwesomeIcon icon="fa-solid fa-bowl-food" />;
+            default:
+                return null;
+        }
+    };
+
+    return (
+        <div className="App">
+            <h1>Soccer Skill Development <FontAwesomeIcon icon="fa-solid fa-futbol" bounce/></h1>
+            <div className="container">
+                {soccerResources.map((resource, index) => (
+                    <div className="card" key={index}>
+                        <img className="img" src={resource.images} alt={resource.title}/>
+                        <h3>{resource.title} {getIcon(resource.title)}</h3>
+                        <h4>{resource.description}</h4>
+                        <a href={resource.link} target="_blank">
+                            <button>View Resource</button>
+                        </a>
+                    </div>
+                ))}
+            </div>
+
+        </div>
+
+    )
 }
 
 export default App
